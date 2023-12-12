@@ -28,7 +28,7 @@ const mainItems = [
 
 export const AddButton = ({ children, handleClick }) => {
     return (
-        <Button type="primary" onClick={handleClick}>
+        <Button type="primary" onClick={handleClick} style={{ width: 150 }}>
             {children}
         </Button>
     )
@@ -40,7 +40,7 @@ export const SelectOption = ({ handleSelectClick, handleUpdateSelectClick, handl
             <Select
                 options={items}
                 onChange = { handleUpdateSelectClick }
-                style={{ width: 120 }}
+                style={{ width: "100%" }}
                 defaultValue="incomplete"
                 value={changedTask.status}
             /> :
@@ -48,7 +48,7 @@ export const SelectOption = ({ handleSelectClick, handleUpdateSelectClick, handl
                 options={items}
                 defaultValue="incomplete"
                 onChange = { handleSelectClick }
-                style={{ width: 120 }}
+                style={{ width: "100%" }}
                 value={selectMessage}
             />       
         )}
@@ -58,6 +58,6 @@ export const MainSelect = ({ handleMainSelectClick }) => {
             options={mainItems}
             defaultValue="All"
             onChange={handleMainSelectClick}
-            style={{width: 120}}         
+            style={{width: 150}}         
     />
 )}

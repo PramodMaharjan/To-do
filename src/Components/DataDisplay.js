@@ -1,7 +1,7 @@
 import { Card, Row, Col, List, Empty } from "antd";
 import ListData from "./ListData";
 
-const DataDisplay = ({ messageIncoming, handleDelete, handleEdit, mainSelect }) => {
+const DataDisplay = ({ messageIncoming, handleDelete, handleEdit, mainSelect, handleCheckbox }) => {
     const filteredMessageIncoming = messageIncoming.filter((item) => {
         if (mainSelect === "all") {
             return true;
@@ -15,7 +15,6 @@ const DataDisplay = ({ messageIncoming, handleDelete, handleEdit, mainSelect }) 
                     {filteredMessageIncoming && filteredMessageIncoming.length > 0 ?
                         <List
                             itemLayout="horizontal"
-                            size="small"
                             bordered
                             dataSource={filteredMessageIncoming}
                             renderItem={(item) => (
@@ -23,6 +22,7 @@ const DataDisplay = ({ messageIncoming, handleDelete, handleEdit, mainSelect }) 
                                     item={item}
                                     handleDelete={handleDelete}
                                     handleEdit={handleEdit}
+                                    handleCheckbox={handleCheckbox}
                                 />                  
                         )}
                         /> :

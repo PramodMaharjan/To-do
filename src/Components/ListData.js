@@ -1,22 +1,28 @@
-import { List, Typography } from "antd";
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { List, Typography, Checkbox } from "antd";
+import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 
 const { Text } = Typography 
-const ListData = ({ handleDelete, handleEdit, item }) => {
+const ListData = ({ handleDelete, handleEdit, item, handleCheckbox }) => {
     return (
         <List.Item
             actions={[
                 <Text type="secondary">
                     {item.date}
                 </Text>,
-                <DeleteOutlined onClick={() => handleDelete(item)} />,
-                <EditOutlined onClick={() => handleEdit(item)} />,
+                <DeleteTwoTone onClick={() => handleDelete(item)} />,
+                <EditTwoTone onClick={() => handleEdit(item)} />,
             ]}
         >
-            {item.status === "completed" ?
-                <Text type="danger" delete keyboard>{item.value}</Text> :
-                <Text keyboard>{item.value}</Text>
-            }           
+            <Checkbox
+                checked={item.status === "completed" ? true : false}
+                onChange={(e) => handleCheckbox(item)}
+            >
+                {
+                    item.status === "completed" ?
+                    <Text type="danger" delete keyboard>{item.value}</Text> :
+                    <Text keyboard>{item.value}</Text>
+                }
+            </Checkbox>    
         </List.Item>
     )
 

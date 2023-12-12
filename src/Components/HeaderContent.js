@@ -1,24 +1,28 @@
+import { useEffect, useState } from "react";
 import { AddButton, MainSelect } from "./Button";
 import ModalContent from "./ModalContent";
 import DataDisplay from "./DataDisplay";
-import { useEffect, useState } from "react";
 import { Row, Col } from "antd";
 
 const HeaderContent = () => {
+    const [messageIncoming, setMessageIncoming] = useState(() => {
+        return JSON.parse(localStorage.getItem("messageIncoming")) || []
+    });
     const [modalOpen, setModalOpen] = useState(false);
-    const [messageIncoming, setMessageIncoming] = useState([]);
     const [updateTask, setUpdateTask] = useState(false);
-    const [changedTask, setChangedTask] = useState({})
-    const [mainSelect, setMainSelect] = useState('all')
-    useEffect(() => {
-        localStorage.setItem('messageIncoming', JSON.stringify(messageIncoming));
-    },[messageIncoming])
-    useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('messageIncoming'));
-        if (items) {
-            setMessageIncoming(items);
-        }
-    },[])
+    const [changedTask, setChangedTask] = useState({});
+    const [mainSelect, setMainSelect] = useState('all'); 
+
+    const handleCheckbox = (item) => {
+        messageIncoming.map((todo) => {
+            const checkboxStatus = todo.status === "completed" ? "incomplete" : "completed"
+            if (todo.id === item.id) {
+				return todo.status = checkboxStatus;
+            }
+            console.log("message", messageIncoming)
+			return setMessageIncoming([...messageIncoming]);
+		});
+    }
     const handleClick = () => {
         setModalOpen(true)
     }
@@ -68,6 +72,16 @@ const HeaderContent = () => {
     const handleMainSelectClick = (value) => {
         setMainSelect(value)
     }
+    useEffect(() => {
+        const messageIncoming = JSON.parse(localStorage.getItem("messageIncoming"));
+        if (messageIncoming) {  
+            setMessageIncoming(messageIncoming);
+		}
+    }, []);
+    useEffect(() => {
+            localStorage.setItem("messageIncoming", JSON.stringify(messageIncoming));
+    }, [messageIncoming]);  
+
     return (
         <div>
             <Row justify={"center"}>
@@ -98,6 +112,7 @@ const HeaderContent = () => {
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
                 mainSelect={mainSelect}
+                handleCheckbox={handleCheckbox}
             />
         </div>
     )
